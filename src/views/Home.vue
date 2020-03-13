@@ -5,7 +5,7 @@
     </div>
 
     <div id="active_card">
-      <Card :card="cards[activCardIndex]" />
+      <Card v-if="cards[activCardIndex] != undefined" :card="cards[activCardIndex]" />
       <button @click="remove">REMOVE THIS CARD</button>
     </div>
 
