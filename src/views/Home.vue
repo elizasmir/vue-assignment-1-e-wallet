@@ -28,43 +28,52 @@ export default {
   name: "Home",
   data: () => {
     return {
-      cards: [
-        {
-          cardNumber: "1234123412341234",
-          cardHolderName: "Lizaveta Smirnova",
-          validThru: "12/22",
-          CCV: "123",
-          vendor: "bitcoin"
-        },
-        {
-          cardNumber: "1234123412341234",
-          cardHolderName: "Vlad Smirnova",
-          validThru: "12/22",
-          CCV: "123",
-          vendor: "blockchain"
-        },
-        {
-          cardNumber: "1234123412341234",
-          cardHolderName: "Oskar Smirnova",
-          validThru: "12/22",
-          CCV: "123",
-          vendor: "evil"
-        }
-      ],
+      cards: [],
       activCard: {},
       activCardIndex: 0
     };
+  },
+  created() {
+    const defaultCard = [
+      {
+        cardNumber: "1234123412341234",
+        cardHolderName: "Lizaveta Smirnova",
+        validThru: "12/22",
+        CCV: "123",
+        vendor: "bitcoin"
+      },
+      {
+        cardNumber: "1234123412341234",
+        cardHolderName: "Vlad Smirnova",
+        validThru: "12/22",
+        CCV: "123",
+        vendor: "blockchain"
+      },
+      {
+        cardNumber: "1234123412341234",
+        cardHolderName: "Oskar Smirnova",
+        validThru: "12/22",
+        CCV: "123",
+        vendor: "evil"
+      }
+    ];
+    if (localStorage.getItem("cards") === null) {
+      localStorage.setItem("cards", JSON.stringify(defaultCard));
+    } else {
+      this.cards = JSON.parse(localStorage.getItem("cards"));
+    }
   },
   methods: {
     add() {
       this.$router.push("/addcards");
     },
     remove() {
-        this.cards.splice(this.activCardIndex, 1);
-        this.activCardIndex = 0;
+      this.cards.splice(this.activCardIndex, 1);
+      localStorage.setItem("cards", JSON.stringify(this.cards));
+      this.activCardIndex = 0;
     },
     chooseCard(index) {
-    this.activCardIndex = index;
+      this.activCardIndex = index;
     }
   },
   components: { Top, Card, CardStack },
@@ -107,7 +116,10 @@ button:hover {
   color: #ffffff;
 }
 
-h2, h3, h4, p {
+h2,
+h3,
+h4,
+p {
   font-style: normal;
   font-weight: normal;
   color: #000000;
@@ -122,7 +134,8 @@ h3 {
   font-size: 18px;
   line-height: 20px;
 }
-p, h4 {
+p,
+h4 {
   font-size: 12px;
   line-height: 13px;
 

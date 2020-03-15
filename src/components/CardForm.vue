@@ -130,13 +130,17 @@ export default {
   },
   methods: {
     createCard() {
-      this.$emit("cardAdded", {
+      const newCard = {
         cardNumber: this.newCard.cardNumber,
         cardHolderName: this.newCard.cardHolderName,
         validThru: this.newCard.validThru,
         ccv: this.newCard.ccv,
         vendor: this.newCard.vendor
-      });
+      };
+
+      const allCards = JSON.parse(localStorage.getItem("cards"));
+      allCards.push(newCard);
+      localStorage.setItem("cards", JSON.stringify(allCards));
       this.$router.push("/");
     },
     validCardNumber(cardNumber) {
